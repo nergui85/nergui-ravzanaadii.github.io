@@ -13,6 +13,9 @@ Here's some text. I like the internet. I use [Google](https://www.google.com/) a
 
 This is me. 
 ![](images/nergui.jpg)
+<center>
+<img src="images/nergui.jpg" style="width:25%">
+</center>
 
 ```{r}
 library(tidyverse)
@@ -24,3 +27,8 @@ mean(sample)
 Here's a direct link to the about page: [about](about.html).
 
 I also made a bonus [extra page](extra_page.html)
+
+## New Section!!
+
+[Here's](plotly.html) a page with plotly plots
+
