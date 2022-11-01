@@ -6,7 +6,9 @@ output:
     toc_float: true
 ---
 
-# This is Nergui's awesome website
+# 
 
-This Nergui's Resume and Work experience : 
 
+# Education 
+
+* 

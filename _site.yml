@@ -7,10 +7,13 @@ navbar:
       href: about.html
     - text: "Dashboard"
       href: dashboard.html
+    - text: "Resume"
+      href: resume.html
     - icon: fa-envelope fa-lg
       href: mailto:<you@youremail.com>
     - icon: fa-solid fa-bug
       href: http://github.com/nergui-ravzanaadii/
+      
 output:
   html_document:
     theme: cerulean
