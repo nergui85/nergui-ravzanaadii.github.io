@@ -1,21 +1,20 @@
 ---
-title: "My awesome website"
+title: "About Nergui"
 output: 
   html_document:
     toc: true
     toc_float: true
 ---
 
-# This is Nergui's awesome website
+##### Photo session
 
-This is me. 
-![](images/nergui.jpg)
 <center>
 <img src="images/nergui.jpg" style="width:25%">
 </center>
 
-# Links 
+##### Links 
 * [Linkedin](https://www.linkedin.com/feed/)
 * [Data science](https://p8105.com/index.html)
+*
 
 # 
