@@ -58,7 +58,7 @@ Scatterplot
 ```{r}
 
 tmax_noaa = noaa_tidy |>  
-  filter(month %in% c("April", "October")) %>% 
+  filter(month %in% c("April", "October", "June", "December")) %>% 
   group_by(id, year, month) |>  
   summarize(mean_tmax = mean(tmax, na.rm = TRUE))
 
@@ -96,7 +96,17 @@ Line plots
 
 ```{r}
 
+tmax_noaa |>
+    plot_ly(
+        x = ~month, y = ~mean_tmax,
+        type = "scatter", mode = 'lines', colors = "viridis")
+
 ```
+
+
+
+
+
 
 ## Create a dashboard...
 
