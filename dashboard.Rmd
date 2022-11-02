@@ -55,7 +55,6 @@ Column {data-width=650}
 
 ```{r}
 tmax_noaa = noaa_tidy |> 
-  filter(month %in% c("April", "October")) %>% 
   group_by(id, year, month) |>  
   summarize(mean_tmax = mean(tmax, na.rm = TRUE))
 
@@ -84,7 +83,7 @@ tmax_noaa |>
 tmax_noaa |>
     plot_ly(
         x = ~month, y = ~mean_tmax,
-        type = "box", colors = "viridis")
+        type = "bar", colors = "viridis")
 ```
 
 
