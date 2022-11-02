@@ -1,5 +1,5 @@
 ---
-title: "AirBNB Dashboard"
+title: "Weather Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -10,25 +10,42 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(p8105.datasets)
-library(flexdashboard)
 library(plotly)
+library(dplyr)
+library(readxl)
+library(ggplot2)
+library(patchwork)
+library(lubridate)
+library(ggridges)
+library(flexdashboard)
 ```
 
-```{rm include = FALSE}
-data("nyc_airbnb")
-nyc_airbnb |> 
-    mutate(rating = review_scores_location / 2) |> 
-    select(
-        borough = neighbourhood_group, neighbourhood, price, room_type,
-        lat, long, rating) |> 
-    filter(
-        borough == "Manhattan",
-        room_type == "Entire home/apt",
-        price %in% 100:500
-        ) |> 
-    drop_na(rating)
+```{r, include = FALSE}
+noaa_tidy = ny_noaa |>  
+  janitor::clean_names() |>  
+  separate(date, into = c("year", "month", "day"), convert = TRUE) |> 
+  mutate(
+    prcp = prcp / 10 ,
+    tmax = as.numeric(tmax) / 10,
+    tmin = as.numeric(tmin) / 10,
+    year = as.numeric(year),
+    day = as.numeric(day), 
+    month = recode_factor(month,
+          "01" = "January",
+          "02" = "February",
+          "03" = "March",
+          "04" = "April",
+          "05" = "May",
+          "06" = "June",
+          "07" = "July",
+          "08" = "August",
+          "09" = "September",
+          "10" = "October",
+          "11" = "November",
+          "12" = "December"
+          )) |>  
+  relocate(year, month, day, everything())
 ```
-
 
 
 Column {data-width=650}
@@ -37,13 +54,15 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-nyc_airbnb |>
-    mutate(
-        text_label = str_c("Price: ", price)
-    ) |> 
+tmax_noaa = noaa_tidy |> 
+  filter(month %in% c("April", "October")) %>% 
+  group_by(id, year, month) |>  
+  summarize(mean_tmax = mean(tmax, na.rm = TRUE))
+
+tmax_noaa |> 
     plot_ly(
-        x = ~lat, y = ~long, color = ~ price,
-    type = "scatter", mode = "markers", alpha = .5, text = ~text_label
+        x = ~year, y = ~mean_tmax, color = ~ month,
+    type = "scatter", mode = "markers", alpha = .5, text = "Data from the NOAA dataset"
     )
 ```
 
@@ -53,20 +72,18 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
-nyc_airbnb |>
-    mutate(neighbourhood = fct_reorder(neighbourhood, price)) |> 
+tmax_noaa |>
     plot_ly(
-        y = ~price, color = ~neighbourhood,
+        y = ~mean_tmax, color = ~month,
         type = "box", colors = "viridis")
 ```
 
 ### Chart C
 
 ```{r}
-nyc_airbnb |> 
-    count(neighbourhood) |>
-    mutate(neighbourhood = fct_reorder(neighbourhood, n)) |> 
-    plot_ly(x = ~neighbourhood, y = ~n,
-            type = "bar")
+tmax_noaa |>
+    plot_ly(
+        x = ~month, y = ~mean_tmax,
+        type = "box", colors = "viridis")
 ```
 
