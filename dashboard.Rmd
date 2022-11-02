@@ -88,15 +88,5 @@ tmax_noaa |>
 ```
 
 
-### Chart D
-
-```{r}
-
-tmax_noaa |>
-    plot_ly(
-        x = ~month, y = ~mean_tmax,
-        type = "scatter", mode = 'lines', colors = "viridis")
-
-```
 
 
